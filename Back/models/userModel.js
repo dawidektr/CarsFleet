@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     },
-        {
-            timestamps: true,
-            updatedAt: false,
-        })
+    {
+        timestamps: true,
+        updatedAt: false,
+    });
 
-    return User
+    return User;
 
-}
+};

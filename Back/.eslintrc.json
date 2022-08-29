@@ -5,8 +5,7 @@
         "sourceType": "module"
     },
     "extends": [
-        "eslint:recommended",
-        "prettier"
+        "eslint:recommended"
     ],
     "env": {
         "es2021": true,
@@ -14,7 +13,18 @@
         "browser": true
     },
     "rules": {
-        "no-console": "error"
+        "no-console": "off",
+        "consistent-return": 2,
+        "indent": [
+            1,
+            4
+        ],
+        "no-else-return": 1,
+        "semi": [
+            1,
+            "always"
+        ],
+        "space-unary-ops": 2
     },
     "globals": {
         "require": true,

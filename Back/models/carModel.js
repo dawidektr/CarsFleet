@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
 
-    })
+    });
 
-    return Car
+    return Car;
 
-}
+};

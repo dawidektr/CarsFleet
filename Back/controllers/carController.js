@@ -1,6 +1,6 @@
-const db = require('../models')
+const db = require('../models');
 
-const Car = db.cars
+const Car = db.cars;
 
 const addCar = async (req, res) => {
     let info = {
@@ -9,35 +9,35 @@ const addCar = async (req, res) => {
         year: req.body.year,
         launchDate: req.body.launchDate,
         mileage: req.body.mileage,
-    }
+    };
 
-    const car = await Car.create(info)
-    res.status(200).send(car)
-}
+    const car = await Car.create(info);
+    res.status(200).send(car);
+};
 
 const getCars = async (req, res) => {
-    let cars = await Car.findAll({})
-    res.status(200).send(cars)
-}
+    let cars = await Car.findAll({});
+    res.status(200).send(cars);
+};
 
 const getCar = async (req, res) => {
-    let id = req.params.id
-    let car = await Car.findOne({ where: { id: id } })
-    res.status(200).send(car)
-}
+    let id = req.params.id;
+    let car = await Car.findOne({ where: { id: id } });
+    res.status(200).send(car);
+};
 
 const updateCar = async (req, res) => {
-    let id = req.params.id
-    const car = await Car.update(req.body, { where: { id: id } })
+    let id = req.params.id;
+    const car = await Car.update(req.body, { where: { id: id } });
 
-    res.status(200).send(car)
-}
+    res.status(200).send(car);
+};
 
 const deleteCar = async (req, res) => {
-    let id = req.params.id
-    await Car.destroy({ where: { id: id } })
-    res.status(200).send('Car is deleted !')
-}
+    let id = req.params.id;
+    await Car.destroy({ where: { id: id } });
+    res.status(200).send('Car is deleted !');
+};
 
 module.exports = {
     addCar,
@@ -45,4 +45,4 @@ module.exports = {
     getCar,
     updateCar,
     deleteCar,
-}
+};

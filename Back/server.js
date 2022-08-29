@@ -1,9 +1,23 @@
 const express = require('express');
-// const cors = require('cors')
+
 require('dotenv').config({ path: '.env' });
 const cookieParser = require("cookie-parser");
 
 const app = express();
+
+app.use( (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    res.header(
+        "Access-Control-Allow-Methods",
+        "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    );
+    next();
+});
 
 app.use(express.json());
 

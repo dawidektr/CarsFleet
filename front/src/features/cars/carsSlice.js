@@ -29,7 +29,7 @@ export const addNewCar = createAsyncThunk("api/addCar", async (data) => {
 
 export const updateCar = createAsyncThunk("api/cars/:id", async (data) => {
     const response = await axios.put(
-        `http://localhost:8080/api/cars/${data.id_car}`,
+        `http://localhost:8080/api/cars/${data.id}`,
         data
     );
     return response.data;
@@ -37,9 +37,9 @@ export const updateCar = createAsyncThunk("api/cars/:id", async (data) => {
 
 export const deleteCar = createAsyncThunk("api/deleteCar/", async (data) => {
     const response = await axios.delete(
-        `http://localhost:8080/api/cars/${data.id_car}`
+        `http://localhost:8080/api/cars/${data.id}`
     );
-    if (response?.status === 204) return data.id_car;
+    if (response?.status === 204) return data.id;
     return `${response?.status}: ${response?.statusText}`;
 });
 
@@ -56,6 +56,8 @@ const carsSlice = createSlice({
             })
             .addCase(fetchCars.fulfilled, (state, action) => {
                 const loadedCars = action.payload.map((car) => {
+                    car.createdAt= car.createdAt.slice(0,19).replace('T',' ');
+                    car.updatedAt= car.updatedAt.slice(0,19).replace('T',' ');
                     return car;
                 });
                 state.status = "succeeded";
@@ -66,18 +68,19 @@ const carsSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(addNewCar.fulfilled, (state, action) => {
-                carsAdapter.addOne(state, action.payload[0]);
+                carsAdapter.addOne(state, action.payload);
                 state.status = "succeeded";                
             })
             .addCase(updateCar.pending, (state) => {
                 state.status = "loading";
             })
             .addCase(updateCar.fulfilled, (state, action) => {
-                carsAdapter.upsertOne(state, action.payload[0]);
+                carsAdapter.upsertOne(state, action.payload);
                 state.status = "succeeded";               
             })
             .addCase(deleteCar.fulfilled, (state, action) => {
                 carsAdapter.removeOne(state, action.payload);
+                state.status = 'loading';
             });
     },
 });

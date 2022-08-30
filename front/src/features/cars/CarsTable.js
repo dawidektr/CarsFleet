@@ -1,7 +1,7 @@
 import { Text } from "@chakra-ui/react";
 import React from "react";
 import { useSelector } from "react-redux";
-import Data from "../../Components/Data";
+import Data from "../../components/Data";
 import { getCarsError, getCarsStatus, selectAllCars } from "./carsSlice";
 
 const CarsTable = () => {

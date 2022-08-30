@@ -1,11 +1,16 @@
 const express = require('express');
-
+const bodyParser = require("body-parser");
 require('dotenv').config({ path: '.env' });
 const cookieParser = require("cookie-parser");
 
 const app = express();
 
-app.use( (req, res, next) => {
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(bodyParser.json());
+
+
+app.use( function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   
     res.header(
@@ -16,13 +21,9 @@ app.use( (req, res, next) => {
         "Access-Control-Allow-Methods",
         "GET, POST, OPTIONS, PUT, PATCH, DELETE"
     );
+    res.header('Access-Control-Allow-Credentials', true);
     next();
 });
-
-app.use(express.json());
-
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 
 const CarsRouter = require('./routes/carsRouter.js');
@@ -32,6 +33,7 @@ app.use('/api/', CarsRouter);
 app.use('/api/', UserRouter);
 
 const PORT = process.env.PORT || 8080;
+
 
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);

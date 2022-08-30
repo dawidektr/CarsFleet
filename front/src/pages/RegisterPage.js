@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from "react-redux";
-
 import {
     Box,
     Button,
@@ -11,15 +10,15 @@ import {
     Input,
     Text,
 } from '@chakra-ui/react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {   auth, login, register } from '../features/users/usersSlice';
 
 const RegisterPage = () => {
     const dispatch = useDispatch();
 
     // const navigate = useNavigate();
-    // const [error, setError] = useState('');
-
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -34,7 +33,7 @@ const RegisterPage = () => {
                 .max(50, 'Maksymalnie 50 znaków')
                 .required('Wpisz imię'),
             surname: Yup.string()
-                .min(6, 'Nazwisko za krótkie, co najmniej 4 znaki')
+                .min(4, 'Nazwisko za krótkie, co najmniej 4 znaki')
                 .max(50, 'Maksymalnie 50 znaków')
                 .required('Wymagane nazwisko'),
             email: Yup.string()
@@ -50,7 +49,7 @@ const RegisterPage = () => {
                 .matches(  /^(?=.*[!@#\\$%\\^&\\*])/,"Hasło musi zawierać co najmniej 1 znak specjalny")
                 .matches(/^(?=.{6,20}$)\D*\d/, "Hasło musi zawierać co najmniej 1 cyfrę"),
             rpassword: Yup.string()
-                .required('Wymagane hasło')
+                .required('Powtórz hasło')
                 .oneOf([Yup.ref('password')], 'Hasła się nie zgadzają'),
         }),
         onSubmit: async values => {
@@ -66,9 +65,10 @@ const RegisterPage = () => {
                 await dispatch(register(userData)).unwrap();
                 await dispatch(login(userData)).unwrap();
                 await dispatch(auth()).unwrap();
-                  
+                navigate(`/`, { replace: true });
             } catch (err) {
-                console.error("Błąd dodawania", err);
+               
+                setError(err.message);
             } 
         },
     });
@@ -179,11 +179,11 @@ const RegisterPage = () => {
                         </Button>
                     </Box>
                 </form>
-                {/* {error && (
+                {error && (
                     <Text color={'red'} textAlign="center" fontSize={'2xl'}>
                         {error}
                     </Text>
-                )} */}
+                )}
             </Box>
         </Box>
     );

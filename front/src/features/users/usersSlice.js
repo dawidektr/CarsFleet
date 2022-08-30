@@ -43,6 +43,10 @@ const userSlice = createSlice({
             .addCase(register.fulfilled, (state,action) => {
                 state.userInfo=action.payload;
             })
+            // eslint-disable-next-line no-unused-vars
+            .addCase(register.rejected, (state,action) => {
+                state.userInfo={};
+            })
             
             .addCase(login.fulfilled,(state,action)=>{
                 state.userInfo=action.payload;

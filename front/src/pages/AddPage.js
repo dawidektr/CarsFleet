@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ import Form from '../components/Form';
 const AddPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [error, setError] = useState('');
     const todayDate = new Date().toISOString().slice(0, 10);
     
 
@@ -61,7 +62,7 @@ const AddPage = () => {
                
                   
             } catch (err) {
-                console.error("Błąd dodawania", err);
+                setError(err.message);
             } 
         },
     });
@@ -72,6 +73,11 @@ const AddPage = () => {
         Dodaj samochód
             </Text>
             <Form formik={formik} />
+            {error && (
+                <Text color={'red'} textAlign="center" fontSize={'2xl'}>
+                    {error}
+                </Text>
+            )}
         </Box>
     );
 };

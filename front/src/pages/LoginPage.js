@@ -18,7 +18,7 @@ const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    
+    const [error, setError] = useState('');
   
     const handleSubmit = async (e) =>
     {
@@ -35,7 +35,7 @@ const Login = () => {
             
             navigate(`/`, { replace: true });
         } catch (err) {
-            console.error("Błąd dodawania", err);
+            setError(err.message);
         } 
 
     };
@@ -85,11 +85,11 @@ const Login = () => {
                     <Button colorScheme="blue">Zarejestruj się</Button>
                 </Link>
             </Box>
-            {/* {error && (
+            {error && (
                 <Text color={'red'} textAlign="center" fontSize={'2xl'}>
                     {error}
                 </Text>
-            )} */}
+            )}
         </Box>
     );
 };

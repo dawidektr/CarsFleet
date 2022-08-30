@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require("body-parser");
 require('dotenv').config({ path: '.env' });
 const cookieParser = require("cookie-parser");
-
+const path = require('path');
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -34,7 +34,7 @@ app.use('/api/', UserRouter);
 
 const PORT = process.env.PORT || 8080;
 
-
+app.use(express.static(path.join(__dirname, "build")));
 app.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
 });

@@ -1,5 +1,4 @@
 const db = require('../models');
-
 const Car = db.cars;
 
 const addCar = async (req, res) => {
@@ -20,11 +19,6 @@ const getCars = async (req, res) => {
     res.status(200).send(cars);
 };
 
-const getCar = async (req, res) => {
-    let id = req.params.id;
-    let car = await Car.findOne({ where: { id: id } });
-    res.status(200).send(car);
-};
 
 const updateCar = async (req, res) => {
     let id = req.params.id;
@@ -42,7 +36,7 @@ const deleteCar = async (req, res) => {
 module.exports = {
     addCar,
     getCars,
-    getCar,
+   
     updateCar,
     deleteCar,
 };
